@@ -22,7 +22,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     needs: build-java-jar
-    permission:
+    permissions:
       content: read
       packages: write
 
