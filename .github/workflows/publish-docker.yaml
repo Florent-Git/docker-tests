@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-java-jar
     permissions:
-      content: read
+      contents: read
       packages: write
 
     steps:
