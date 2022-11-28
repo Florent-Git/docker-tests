@@ -2,7 +2,7 @@ name: Create and publish a Docker Image
 
 on:
   push:
-    tags: [ "*" ]
+    branch: master
 
 env:
   REGISTRY: ghcr.io
@@ -50,5 +50,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.output.tags[0] }}
-          labels: ${{ steps.meta.output.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
