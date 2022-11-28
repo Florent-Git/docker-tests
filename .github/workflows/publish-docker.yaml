@@ -64,7 +64,7 @@ jobs:
           path: target/
 
       - name: Create directories
-        runs: mkdir ./build && mkdir ./build/libs
+        run: mkdir ./build && mkdir ./build/libs
 
       - name: Move the downloaded artifact to the correct directory
         run: mv target/ktor-test.jar ./build/libs/.
