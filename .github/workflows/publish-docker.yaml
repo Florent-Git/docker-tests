@@ -24,8 +24,11 @@ jobs:
       - name: Run jar build
         run: ./gradlew buildFatJar
 
+      - name: Create target directory
+        run: mkdir target/
+
       - name: Move built jar
-        run: mv ./build/libs/*.jar /target/ktor-test.jar
+        run: mv ./build/libs/*.jar target/ktor-test.jar
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
