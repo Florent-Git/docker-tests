@@ -31,7 +31,7 @@ jobs:
         run: mv ./build/libs/docker-deploy-all.jar target/ktor-test.jar
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: ktor-test
           path: target/
@@ -61,7 +61,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Download built artifact
-        uses: actions/download-artifacts@v1
+        uses: actions/download-artifact@v3
         with:
           name: ktor-test
           path: target/
