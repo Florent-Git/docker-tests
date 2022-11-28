@@ -28,7 +28,7 @@ jobs:
         run: mkdir target/
 
       - name: Move built jar
-        run: mv ./build/libs/*.jar target/ktor-test.jar
+        run: mv ./build/libs/docker-deploy-all.jar target/ktor-test.jar
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
