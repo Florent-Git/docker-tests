@@ -14,12 +14,24 @@ jobs:
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
+
       - name: Setup gradle
         uses: gradle/gradle-build-action@v2
+
       - name: Modify the gradle execution flags
         run: chmod +x ./gradlew
+
       - name: Run jar build
         run: ./gradlew buildFatJar
+
+      - name: Move built jar
+        run: mv ./build/libs/*.jar /target/ktor-test.jar
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ktor-test
+          path: target/
 
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -44,6 +56,18 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Download built artifact
+        uses: actions/download-artifacts@v1
+        with:
+          name: ktor-test
+          path: target/
+
+      - name: Create directories
+        runs: mkdir ./build && mkdir ./build/libs
+
+      - name: Move the downloaded artifact to the correct directory
+        run: mv target/ktor-test.jar ./build/libs/.
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
