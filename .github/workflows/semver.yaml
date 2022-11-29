@@ -4,12 +4,13 @@ on:
   pull_request:
     types: [closed]
 
-increment_version:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Retrieve the pull request's type
-      id: prType
-      run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)"
+jobs:
+  increment_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve the pull request's type
+        id: prType
+        run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)"
 
-    - name: Print the pull request type to the console
-      run: echo "${{ steps.prType.outputs }}"
+      - name: Print the pull request type to the console
+        run: echo "${{ steps.prType.outputs }}"
