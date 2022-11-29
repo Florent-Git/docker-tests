@@ -1,0 +1,15 @@
+name: Increments semantic version based on the pull request message and creates a new tag
+
+on:
+  pull_request:
+    types: [closed]
+
+increment_version:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Retrieve the pull request's type
+      id: prType
+      run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)"
+
+    - name: Print the pull request type to the console
+      run: echo "${{ steps.prType.outputs }}"
