@@ -8,9 +8,21 @@ jobs:
   increment_version:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Retrieve the pull request's type
         id: prType
         run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)" | awk '{print "type=" $1}' >> $GITHUB_OUTPUT
 
-      - name: Print the pull request type to the console
-        run: echo "${{ steps.prType.outputs.type }}"
+      - name: Increment the semantic version linked to the PR
+        run: ./gradlew incrementVersion --versionIncrementType="${{ steps.prType.outputs.type }}"
+
+      - name: Retrieve the new version
+        id: newVersion
+        run: ./gradlew printVersion -Psnapshot=false | grep "Version:" | cut -d " " -f 2 | awk '{print "currentVersion=" $1}' >> $GITHUB_OUTPUT
+
+      - name: Create the tag with the outputted version
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ steps.newVersion.outputs.currentVersion }}"
