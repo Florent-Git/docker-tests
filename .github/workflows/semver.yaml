@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Retrieve the pull request's type
         id: prType
-        run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)" >> $GITHUB_OUTPUT
+        run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)" | awk '{print "type=" $1}' >> $GITHUB_OUTPUT
 
       - name: Print the pull request type to the console
-        run: echo "${{ steps.prType.outputs }}"
+        run: echo "${{ steps.prType.outputs.type }}"
