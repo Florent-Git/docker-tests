@@ -31,4 +31,4 @@ jobs:
       - name: Create the tag with the outputted version
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: "${{ steps.newVersion.outputs.currentVersion }}"
+          tag: "v${{ steps.newVersion.outputs.currentVersion }}"
