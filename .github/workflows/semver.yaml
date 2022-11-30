@@ -15,6 +15,12 @@ jobs:
         id: prType
         run: echo "${{ github.event.pull_request.title }}" | grep -oP "(?<=\[)\w+(?=].*)" | awk '{print "type=" $1}' >> $GITHUB_OUTPUT
 
+      - name: Setup gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Modify the gradle execution flags
+        run: chmod +x ./gradlew
+
       - name: Increment the semantic version linked to the PR
         run: ./gradlew incrementVersion --versionIncrementType="${{ steps.prType.outputs.type }}"
 
